@@ -60,4 +60,6 @@ public interface InterviewRoomMapper {
      */
     @Delete("DELETE FROM interview_room WHERE id = #{id}")
     int deleteInterviewRoom(Long id);
+
+
 }

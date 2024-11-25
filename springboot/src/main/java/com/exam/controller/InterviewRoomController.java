@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/interview-room")
+@CrossOrigin(origins = "*")
 public class InterviewRoomController {
 
     @Autowired
@@ -43,4 +44,16 @@ public class InterviewRoomController {
     public void deleteInterviewRoom(@PathVariable Long id) {
         interviewRoomService.deleteInterviewRoom(id);
     }
+    // 开始面试接口
+    @GetMapping("/startInterview")
+    public String startInterview(@RequestParam Long id) {
+        return interviewRoomService.startInterview(id);
+    }
+
+    // 结束面试接口
+    @PostMapping("/endInterview")
+    public String endInterview(@RequestParam("id") Long id) {
+        return interviewRoomService.endInterview(id);
+    }
+
 }

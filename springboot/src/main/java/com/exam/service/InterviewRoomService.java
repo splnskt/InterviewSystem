@@ -19,4 +19,11 @@ public interface InterviewRoomService {
 
     // 删除面试房间
     void deleteInterviewRoom(Long id);
+
+    // 开始面试
+    String startInterview(Long id);
+
+    // 结束面试
+    String endInterview(Long id);
+
 }
