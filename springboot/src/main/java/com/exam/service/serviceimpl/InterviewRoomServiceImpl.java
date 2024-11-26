@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class InterviewRoomServiceImpl implements InterviewRoomService {
@@ -16,6 +17,10 @@ public class InterviewRoomServiceImpl implements InterviewRoomService {
 
     @Override
     public void createInterviewRoom(InterviewRoom interviewRoom) {
+        // 如果状态为空，设置为“准备中”
+        if (interviewRoom.getStatus() == null || interviewRoom.getStatus().isEmpty()) {
+            interviewRoom.setStatus("准备中");
+        }
         interviewRoomMapper.insertInterviewRoom(interviewRoom);
     }
 
