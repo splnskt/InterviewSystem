@@ -35,6 +35,11 @@ public class InterviewRoomServiceImpl implements InterviewRoomService {
     }
 
     @Override
+    public List<InterviewRoom> getStudentInterviewRooms(String candidateName) {
+        return interviewRoomMapper.getStudentInterviewRooms(candidateName);
+    }
+
+    @Override
     public void updateInterviewRoom(InterviewRoom interviewRoom) {
         interviewRoomMapper.updateInterviewRoom(interviewRoom);
     }
@@ -85,6 +90,5 @@ public class InterviewRoomServiceImpl implements InterviewRoomService {
 
         return "面试已结束，房间 ID：" + id;
     }
-
 
 }

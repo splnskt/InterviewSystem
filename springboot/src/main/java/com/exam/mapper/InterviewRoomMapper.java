@@ -37,6 +37,15 @@ public interface InterviewRoomMapper {
     List<InterviewRoom> getAllInterviewRooms();
 
     /**
+     * 根据学生姓名查询其参与的面试列表
+     *
+     * @param candidateName 学生姓名
+     * @return 面试房间列表
+     */
+    @Select("SELECT * FROM interview_room WHERE candidate_name = #{candidateName}")
+    List<InterviewRoom> getStudentInterviewRooms(@Param("candidateName") String candidateName);
+
+    /**
      * 更新面试房间
      *
      * @param interviewRoom 面试房间对象

@@ -32,6 +32,11 @@ public class InterviewRoomController {
     public List<InterviewRoom> getAllInterviewRooms() {
         return interviewRoomService.getAllInterviewRooms();
     }
+    // 根据studentId查询面试房间
+    @GetMapping("/studentInterviews")
+    public List<InterviewRoom> getStudentInterviews(@RequestParam String candidateName) {
+        return interviewRoomService.getStudentInterviewRooms(candidateName);
+    }
 
     // 更新面试房间
     @PutMapping

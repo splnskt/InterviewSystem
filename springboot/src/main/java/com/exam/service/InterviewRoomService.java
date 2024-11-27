@@ -14,6 +14,9 @@ public interface InterviewRoomService {
     // 查询所有面试房间
     List<InterviewRoom> getAllInterviewRooms();
 
+    // 根据student姓名查询面试房间
+    List<InterviewRoom> getStudentInterviewRooms(String candidateName);
+
     // 更新面试房间
     void updateInterviewRoom(InterviewRoom interviewRoom);
 
