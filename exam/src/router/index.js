@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import store from '@/vuex/store'; // 引入 Vuex store 以便获取用户角色信息
 Vue.use(Router)
 
 export default new Router({
@@ -76,7 +77,27 @@ export default new Router({
         {
           path: '/addTeacher',
           component: () => import ('@/components/admin/addTeacher')
-        }
+        },
+        // 原有的教师功能路由...
+        {
+          path: '/teacher/interviews', // 教师面试列表
+          component: () => import('@/components/teacher/InterviewList'),
+          meta: { role: 'teacher' }
+        },
+        {
+          path: '/teacher/interview/create', // 创建面试
+          component: () => import('@/components/teacher/InterviewCreate'),
+          meta: { role: 'teacher' }
+        },
+        {
+          path: '/teacher/interview/:id', // 教师面试详情
+          component: () => import('@/components/teacher/InterviewDetail'),
+          meta: { role: 'teacher' }
+        },
+        {
+          path: '/teacher/interviewRoom',
+          component: () => import('@/components/teacher/InterviewRoom'),
+        },
       ]
     },
     {
@@ -89,9 +110,26 @@ export default new Router({
         {path: '/examMsg', component: () => import('@/components/student/examMsg')},
         {path: '/message', component: () => import('@/components/student/message')},
         {path: '/studentScore', component: () => import("@/components/student/answerScore")},
-        {path: '/scoreTable', component: () => import("@/components/student/scoreTable")}
+        {path: '/scoreTable', component: () => import("@/components/student/scoreTable")},
+        // 原有的学生功能路由...
+        {
+          path: 'interviewlist', // 学生面试列表
+          component: () => import('@/components/student/InterviewList'),
+          meta: { role: 'student' },
+        },
+        {
+          path: 'interview/:id', // 学生面试详情
+          component: () => import('@/components/student/InterviewDetail'),
+          meta: { role: 'student' },
+        },
+        {
+          path: '/student/interviewRoom',
+          component: () => import('@/components/student/InterviewRoom'),
+        },
       ]
     },
     {path: '/answer',component: () => import('@/components/student/answer')}
   ]
 })
+
+

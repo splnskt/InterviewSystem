@@ -4,7 +4,7 @@
     <el-row>
       <el-col :span="4" class="topbar-left">
         <i class="iconfont icon-kaoshi"></i>
-        <span class="title" @click="index()">EXAM-SYSTEM</span>
+        <span class="title" @click="index()">Interview-SYSTEM</span>
       </el-col>
       <el-col :span="20" class="topbar-right">
         <i class="el-icon-menu" @click="toggle()"></i>
