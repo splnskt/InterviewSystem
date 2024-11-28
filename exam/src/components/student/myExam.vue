@@ -1,12 +1,12 @@
 // 我的试卷页面
 <template>
   <div id="myExam">
-    <div class="title">我的试卷</div>
+    <div class="title">面试题列表</div>
     <div class="wrapper">
       <ul class="top">
-        <li class="order">试卷列表</li>
-        <li class="search-li"><div class="icon"><input type="text" placeholder="试卷名称" class="search" v-model="key"><i class="el-icon-search"></i></div></li>
-        <li><el-button type="primary" @click="search()">搜索试卷</el-button></li>
+        <li class="order">面试题列表</li>
+        <li class="search-li"><div class="icon"><input type="text" placeholder="面试题名称" class="search" v-model="key"><i class="el-icon-search"></i></div></li>
+        <li><el-button type="primary" @click="search()">搜索面试题</el-button></li>
       </ul>
       <ul class="paper" v-loading="loading">
         <li class="item" v-for="(item,index) in pagination.records" :key="index">
@@ -54,7 +54,7 @@ export default {
     this.loading = true
   },
   // watch: {
-    
+
   // },
   methods: {
     //获取当前所有考试信息

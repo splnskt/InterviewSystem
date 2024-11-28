@@ -2,7 +2,7 @@
 <template>
   <div id="msg">
     <div class="title">
-      <span>试卷列表</span>
+      <span>面试题列表</span>
       <span>/  {{examData.source}}</span>
     </div>
     <div class="wrapper">
@@ -20,7 +20,6 @@
       <ul class="bottom">
         <li>更新于{{examData.examDate}}</li>
         <li>来自 {{examData.institute}}</li>
-        <li class="btn">{{examData.type}}</li>
         <li class="right"><el-button @click="toAnswer(examData.examCode)">开始答题</el-button></li>
       </ul>
       <ul class="info">
@@ -70,7 +69,7 @@
             </el-collapse-item>
           </el-collapse>
         </el-collapse-item>
-        
+
       </el-collapse>
     </div>
     <!--考生须知对话框-->
@@ -201,7 +200,7 @@ export default {
   padding: 5px 10px;
   border: 1px solid #88949b;
   border-radius: 4px;
-} 
+}
 .wrapper .bottom {
   display: flex;
   margin-left: 20px;

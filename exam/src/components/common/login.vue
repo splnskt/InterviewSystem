@@ -5,7 +5,7 @@
     <el-row class="main-container">
       <el-col :lg="8" :xs="16" :md="10" :span="10">
         <div class="top">
-          <i class="iconfont icon-kaoshi"></i><span class="title">在线考试系统</span>
+          <i class="iconfont icon-kaoshi"></i><span class="title">公务员考试系统</span>
         </div>
         <div class="bottom">
           <div class="container">
@@ -34,7 +34,7 @@
     </el-row>
     <el-row class="footer">
       <el-col>
-        <p class="msg2">版权所有 ©2019 <!--重庆文理学院计科2班余晓江--> 保留所有权利  <a href="http://beian.miit.gov.cn/" target="_blank">渝ICP备19001371号</a></p>
+<!--        <p class="msg2">版权所有 ©2019 &lt;!&ndash;重庆文理学院计科2班余晓江&ndash;&gt; 保留所有权利  <a href="http://beian.miit.gov.cn/" target="_blank">渝ICP备19001371号</a></p>-->
       </el-col>
     </el-row>
     <section class="remind">

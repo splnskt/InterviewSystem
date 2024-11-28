@@ -48,7 +48,7 @@ CREATE TABLE `exam_manage`  (
   `examCode` int(9) NOT NULL AUTO_INCREMENT COMMENT '考试编号',
   `description` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '该次考试介绍',
   `source` varchar(20) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '课程名称',
-  `paperId` int(10) NULL DEFAULT NULL COMMENT '试卷编号',
+  `paperId` int(10) NULL DEFAULT NULL COMMENT '面试题编号',
   `examDate` varchar(10) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '考试日期',
   `totalTime` int(3) NULL DEFAULT NULL COMMENT '持续时长',
   `grade` varchar(10) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '年级',
