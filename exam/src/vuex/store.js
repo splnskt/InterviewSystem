@@ -66,6 +66,9 @@ const state = {
   // 新增的状态
   interviewRooms: [], // 面试房间列表
   currentInterviewRoom: null, // 当前的面试房间详情
+  interviewLogs: [], // 面试日志列表
+  appointments: [], // 面试预约列表
+  evaluations: [], // 面试评价列表
 }
 const mutations = {
   practice(state,status) {
@@ -89,6 +92,28 @@ const mutations = {
   setInterviewRooms(state, interviewRooms) {
     state.interviewRooms = interviewRooms;
   },
+  // 再新增的 mutations
+  ADD_INTERVIEW_LOG(state, log) {
+    state.interviewLogs.push(log);
+    localStorage.setItem('interviewLogs', JSON.stringify(state.interviewLogs));
+  },
+  SET_INTERVIEW_LOGS(state, logs) {
+    state.interviewLogs = logs;
+  },
+  ADD_APPOINTMENT(state, appointment) {
+    state.appointments.push(appointment);
+    localStorage.setItem('appointments', JSON.stringify(state.appointments));
+  },
+  SET_APPOINTMENTS(state, appointments) {
+    state.appointments = appointments;
+  },
+  ADD_EVALUATION(state, evaluation) {
+    state.evaluations.push(evaluation);
+    localStorage.setItem('evaluations', JSON.stringify(state.evaluations));
+  },
+  SET_EVALUATIONS(state, evaluations) {
+    state.evaluations = evaluations;
+  },
 }
 const getters = {
   // 新增的 getters
@@ -97,7 +122,17 @@ const getters = {
   },
   currentInterviewRoom(state) {
     return state.currentInterviewRoom;
-  }
+  },
+  // 再新增的 getters
+  allInterviewLogs(state) {
+    return state.interviewLogs;
+  },
+  allAppointments(state) {
+    return state.appointments;
+  },
+  allEvaluations(state) {
+    return state.evaluations;
+  },
 }
 const actions = {
   getUserInfo(context,info) {
@@ -158,6 +193,26 @@ const actions = {
     */
     // 暂时返回一个已解决的 Promise
     return Promise.resolve();
+  },
+  // 再新增的 actions
+  initializeStore({ commit }) {
+    const logs = JSON.parse(localStorage.getItem('interviewLogs')) || [];
+    commit('SET_INTERVIEW_LOGS', logs);
+
+    const appointments = JSON.parse(localStorage.getItem('appointments')) || [];
+    commit('SET_APPOINTMENTS', appointments);
+
+    const evaluations = JSON.parse(localStorage.getItem('evaluations')) || [];
+    commit('SET_EVALUATIONS', evaluations);
+  },
+  addInterviewLog({ commit }, log) {
+    commit('ADD_INTERVIEW_LOG', log);
+  },
+  addAppointment({ commit }, appointment) {
+    commit('ADD_APPOINTMENT', appointment);
+  },
+  addEvaluation({ commit }, evaluation) {
+    commit('ADD_EVALUATION', evaluation);
   },
 }
 export default new VUEX.Store({
