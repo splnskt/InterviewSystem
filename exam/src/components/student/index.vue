@@ -5,10 +5,9 @@
       <el-col :span="24">
         <ul class="list">
           <li class="logo">
-            <i class="iconfont icon-kaoshi"></i>
             <span>公务员面试系统</span>
           </li>
-          <li><a href="javascript:;" @click="exam()">面试题列表</a></li>
+          <li><a href="javascript:;" @click="exam()">笔试题列表</a></li>
           <li><a href="javascript:;" @click="interview()">我的面试</a></li>
           <li><router-link to="/scoreTable">我的分数</router-link></li>
           <li
@@ -111,23 +110,28 @@ li {
   height: 60px;
   line-height: 60px;
 }
-#student .list{
+#student .list {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
 }
 #student .list li {
   padding: 0 20px;
   cursor: pointer;
+  flex: 1;
+  text-align: center;
 }
 #student .list li:hover {
-  background-color: #0195ff;
+  background-color: #3CB371;
   transition: all 2s ease;
 }
 #student .list li:hover a {
   color: #fff;
 }
 #student .list .right {
-  margin-left: auto;
   position: relative;
+  flex: 1;
 }
 #student .list li.right :hover a {
   color: #000;
@@ -135,7 +139,10 @@ li {
 #student .list .logo {
   display: flex;
   font-weight: bold;
-  color: #2f6c9f;
+  color: #3CB371;
+  justify-content: center;
+  align-items: center;
+  flex: 2;
 }
 #student .list .logo i {
   font-size: 50px;
@@ -143,13 +150,14 @@ li {
 .right .msg {
   text-align: center;
   position: absolute;
+  right: 0;
   top: 60px;
-  left: 0px;
   display: flex;
   flex-direction: column;
   border-radius: 2px;
-  border-bottom: 3px solid #0195ff;
+  border-bottom: 3px solid #3CB371;
   background-color: #fff;
+  min-width: 120px;
 }
 .right .msg p {
   height: 40px;
@@ -157,6 +165,6 @@ li {
   width: 105px;
 }
 .right .msg p:hover {
-  background-color: #0195ff;
+  background-color: #3CB371;
 }
 </style>

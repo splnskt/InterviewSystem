@@ -24,8 +24,8 @@
       </div>
       <div class="all">
         <ul class="msglist">
-          <li class="list" 
-          @mouseenter="enter(index)" 
+          <li class="list"
+          @mouseenter="enter(index)"
           @mouseleave="leave(index)"
           v-for="(data,index) in msg" :key="index"
           >
@@ -75,7 +75,7 @@ export default {
     this.getMsg()
   },
   // watch: {
-    
+
   // },
   methods: {
     getMsg() {
@@ -166,7 +166,7 @@ export default {
         this.$message({
           type: 'info',
           message: '取消输入'
-        });       
+        });
       });
     },
     enter(index) {
@@ -202,7 +202,7 @@ export default {
   }
   .all {
     .date {
-      color: rgb(80, 157, 202);
+      color: #3CB371;
       line-height: 45px;
       font-size: 13px;
     }
@@ -229,7 +229,7 @@ export default {
       .icon-date {
         font-size: 13px;
         margin-right: 4px;
-        color: rgb(80, 157, 202);
+        color: #3CB371;
       }
       .replay {
         position: absolute;
@@ -240,10 +240,10 @@ export default {
         transition: all .3s ease;
       }
       .comment {
-        margin:-7px 0px; 
+        margin:-7px 0px;
         padding-bottom: 12px;
         font-size: 13px;
-        color: #28b2b4;
+        color: #3CB371;
         i {
           margin-right: 4px;
         }

@@ -1,38 +1,39 @@
 <!--左边下拉导航栏-->
 <template>
   <div id="left">
-    <el-menu
-      :default-active="$route.path"
-      class="el-menu-vertical-demo"
-      background-color="#124280"
-      text-color="#fff"
-      active-text-color="#ffd04b"
-      :collapse="flag"
-      router
-    >
-      <el-submenu
-        v-for="(item, index) in menu"
-        :key="index"
-        :index="item.index"
+    <!-- 新增顶部导航栏 -->
+    <div class="top-nav">
+      <el-menu
+        :default-active="$route.path"
+        class="horizontal-menu"
+        background-color="#fff"
+        text-color="#333"
+        active-text-color="#3CB371"
+        mode="horizontal"
+        router
       >
-        <template slot="title">
-          <div class="left-width">
+        <el-submenu
+          v-for="(item, index) in menu"
+          :key='index+"_top"'
+          :index="item.index+'_top'"
+        >
+          <template slot="title">
             <i class="iconfont" :class="item.icon"></i>
-            <span class="title">{{ item.title }}</span>
-          </div>
-        </template>
-        <el-menu-item-group>
-          <el-menu-item
-            v-for="(listItem, idx) in item.content"
-            :key="idx"
-            :index="listItem.path"
-            @click="handleTitle(item.index)"
-          >
-            {{ listItem.item1 || listItem.item2 || listItem.item3 }}
-          </el-menu-item>
-        </el-menu-item-group>
-      </el-submenu>
-    </el-menu>
+            <span>{{ item.title }}</span>
+          </template>
+          <el-menu-item-group>
+            <el-menu-item
+              v-for="(listItem, idx) in item.content"
+              :key="idx"
+              :index="listItem.path"
+              @click="handleTitle(item.index)"
+              v-if="listItem.item1 || listItem.item2 || listItem.item3">
+              {{ listItem.item1 || listItem.item2 || listItem.item3 }}
+            </el-menu-item>
+          </el-menu-item-group>
+        </el-submenu>
+      </el-menu>
+    </div>
   </div>
 </template>
 
@@ -42,10 +43,10 @@ export default {
   name: "mainLeft",
   data() {
     return {
-      
+
     }
   },
-  computed: mapState(["flag","menu"]),
+  computed: mapState(["menu"]),
   created() {
     this.addData()
   },
@@ -65,56 +66,83 @@ export default {
       if(role == 0) {
         this.menu.push({
           index: '5',
-          title: '教师管理',
+          title: '面试官管理',
           icon: 'icon-Userselect',
-          content:[{item1:'教师管理',path:'/teacherManage'},{item2: '添加教师',path: '/addTeacher'}],
+          content:[{item1:'面试官管理',path:'/teacherManage'},{item2: '添加面试官',path: '/addTeacher'}],
         })
       }
     }
-    
-    
+
+
   },
 }
 </script>
 
 <style>
-.el-menu-vertical-demo .el-submenu__title {
-  overflow: hidden;
-}
-.left-width .iconfont {
-  font-size: 18px;
-  color: #fff;
-}
-.left-width {
-  width: 213px;
-}
-.el-menu-vertical-demo:not(.el-menu--collapse) {
-  min-height: 900px;
-}
 #left {
-  height: 900px;
-  background-color: #124280;
+  width: 100%;
   z-index: 0;
+  top: 80px;
 }
-#left .el-menu-vertical-demo .title {
-  color: #fff;
-  font-size: 16px;
-  font-weight: bold;
-  margin-left: 14px;
-}
-.el-submenu {
-  border-bottom: 1px solid #eeeeee0f !important;
-}
-.el-submenu__title:hover {
+
+.top-nav {
+  top: 80px;
+  left: 0;
+  right: 0;
   background-color: #fff;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  z-index: 1;
 }
-.el-submenu__title i {
-    color: #fbfbfc !important;
+
+.horizontal-menu {
+  border-bottom: none;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
 }
-/* 在您的样式文件中，添加 icon-interview 图标样式 */
-.icon-interview {
-  font-size: 18px;
-  color: #fff;
-  /* 其他样式 */
+
+.horizontal-menu > .el-submenu {
+  flex: 1;
+  text-align: center;
 }
+
+.horizontal-menu .el-submenu__title {
+  height: 50px;
+  line-height: 50px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.horizontal-menu .el-submenu__title i {
+  margin-right: 5px;
+}
+
+.horizontal-menu .el-submenu__icon-arrow {
+  position: relative;
+  margin-left: 5px;
+}
+
+.horizontal-menu .el-submenu__title:hover {
+  color: #3CB371 !important;
+}
+
+.horizontal-menu .el-submenu.is-active .el-submenu__title {
+  border-bottom: 2px solid #3CB371;
+  color: #3CB371;
+}
+
+.horizontal-menu .el-menu--popup {
+  min-width: 200px;
+  margin-top: 5px;
+}
+
+.horizontal-menu .el-menu-item {
+  padding: 0 20px;
+  text-align: center;
+}
+
 </style>
+

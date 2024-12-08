@@ -7,20 +7,22 @@
     </div>
     <div class="wrapper">
       <ul class="top">
-        <li class="example">{{examData.source}}</li>
-        <li><i class="iconfont icon-pen-"></i></li>
-        <li><i class="iconfont icon-share"></i></li>
-        <li class="right">
+        <li class="title-section">{{examData.source}}</li>
+        <li class="score-section">
           <div>
             <span class="count">总分</span>
             <span class="score">{{score[0]+score[1]+score[2]}}</span>
+          </div>
+        </li>
+        <li class="button-section">
+          <div class="right">
+            <el-button type="primary" @click="toAnswer(examData.examCode)">开始答题</el-button>
           </div>
         </li>
       </ul>
       <ul class="bottom">
         <li>更新于{{examData.examDate}}</li>
         <li>来自 {{examData.institute}}</li>
-        <li class="right"><el-button @click="toAnswer(examData.examCode)">开始答题</el-button></li>
       </ul>
       <ul class="info">
         <li @click="dialogVisible = true"><a href="javascript:;"><i class="iconfont icon-info"></i>考生须知</a></li>
@@ -49,7 +51,7 @@
             </el-collapse-item>
             <el-collapse-item>
               <template slot="title" name="2">
-                <div class="titlei">填空题 (共{{topicCount[1]}}题  共计{{score[1]}}分)</div>
+                <div class="titlei">解答题 (共{{topicCount[1]}}题  共计{{score[1]}}分)</div>
               </template>
               <div class="contenti">
                 <ul class="question" v-for="(list, index) in topic[2]" :key="index">
@@ -136,12 +138,36 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.title {
+  span {
+    margin-right: 10px;
+  }
+}
+
+.wrapper {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 4px;
+}
+
+.content {
+  background-color: #fff;
+  margin-top: 20px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.content .inner {
+  margin: 20px 0;
+  padding-bottom: 20px;
+}
+
 .bottom {
   .right{
     .el-button{
-      color: #409EFF;
-      border-color: #c6e2ff;
-      background-color: #ecf5ff;
+      color: #3CB371;
+      border-color: #98FFB3;
+      background-color: #e8fff0;
     }
   }
 }
@@ -193,7 +219,7 @@ export default {
   font-size: 14px;
 }
 .wrapper .info a:hover {
-  color: #0195ff;
+  color: #3CB371;
 }
 .wrapper .bottom .btn {
   cursor: pointer;
@@ -212,9 +238,9 @@ export default {
   margin-right: 14px;
 }
 #msg {
-  background-color: #eee;
-  width: 980px;
-  margin: 0 auto;
+  min-height: calc(100vh - 80px);
+  background-color: #f0f2f5;
+  padding: 20px;
 }
 #msg .title {
   margin: 20px;
@@ -227,27 +253,34 @@ export default {
   display: flex;
   margin: 20px;
   align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding-right: 0;
+  box-sizing: border-box;
 }
-.wrapper .top .right {
-  margin-left: auto;
-}
-.wrapper .top .example {
+.wrapper .top .title-section {
   color: #333;
   font-size: 22px;
   font-weight: 700;
+  flex: 1;
+  margin-right: 20px;
 }
-.wrapper .top li i {
-  margin-left: 20px;
-  color: #88949b;
+.wrapper .top .score-section {
+  margin: 0 20px;
+}
+.wrapper .top .button-section {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
 }
 .wrapper .right .count {
   margin-right: 60px;
   color: #fff;
   padding: 4px 10px;
-  background-color: #88949b;
+  background-color: #3CB371;
+  border: 1px solid #3CB371;
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
-  border: 1px solid #88949b;
 }
 .wrapper .right .score {
   position: absolute;
@@ -255,7 +288,7 @@ export default {
   top: -5px;
   padding: 1px 12px;
   font-size: 20px;
-  color: #88949b;
+  color: #3CB371;
   border: 1px dashed #88949b;
   border-left: none;
   border-top-right-radius: 4px;
@@ -264,5 +297,16 @@ export default {
 }
 .wrapper .right div {
   position: relative;
+}
+/* 调整按钮样式 */
+.el-button--primary {
+  background-color: #3CB371;
+  border-color: #3CB371;
+  padding: 10px 15px;
+
+  &:hover {
+    background-color: #45cc7d;
+    border-color: #45cc7d;
+  }
 }
 </style>

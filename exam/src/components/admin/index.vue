@@ -26,11 +26,11 @@ export default {
   },
   data() {
     return {
-      username: '许如梦'
+      username: 'aaa'
     }
   },
   methods: {
-    
+
   }
 }
 </script>
@@ -43,10 +43,15 @@ export default {
 .container {
   display: flex;
   background-color: #fff;
+  flex-direction: column;
 }
 .main_wrapper {
   overflow: hidden;
   flex: 1;
+  background-color: #fff;
+}
+.left_side {
+  width: 100%;
   background-color: #fff;
 }
 </style>

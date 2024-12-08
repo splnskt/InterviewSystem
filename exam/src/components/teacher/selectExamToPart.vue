@@ -2,17 +2,17 @@
 <template>
   <div class="exam">
     <el-table :data="pagination.records" border>
-      <el-table-column fixed="left" prop="source" label="面试题名称" width="180"></el-table-column>
+      <el-table-column fixed="left" prop="source" label="试题名称" width="180"></el-table-column>
       <el-table-column prop="description" label="介绍" width="200"></el-table-column>
-      <el-table-column prop="institute" label="所属学院" width="120"></el-table-column>
-      <el-table-column prop="major" label="所属专业" width="200"></el-table-column>
+      <el-table-column prop="institute" label="岗位" width="120"></el-table-column>
+      <el-table-column prop="major" label="专业要求" width="200"></el-table-column>
       <el-table-column prop="grade" label="年级" width="100"></el-table-column>
-      <el-table-column prop="examDate" label="面试日期" width="120"></el-table-column>
+      <el-table-column prop="examDate" label="考试日期" width="120"></el-table-column>
       <el-table-column prop="totalTime" label="持续时间" width="120"></el-table-column>
       <el-table-column prop="totalScore" label="总分" width="120"></el-table-column>
-      <el-table-column prop="type" label="面试题类型" width="120"></el-table-column>
-      <el-table-column prop="tips" label="考生提示" width="400"></el-table-column>
-      <el-table-column fixed="right" label="操作" width="150">
+<!--      <el-table-column prop="type" label="试题类型" width="120"></el-table-column>-->
+<!--      <el-table-column prop="tips" label="考生提示" width="400"></el-table-column>-->
+      <el-table-column fixed="right" label="" width="150">
         <template slot-scope="scope">
           <el-button @click="toPart(scope.row.examCode,scope.row.source)" type="primary" size="small">查看分段</el-button>
         </template>
@@ -72,14 +72,30 @@ export default {
 <style lang="less" scoped>
 .exam {
   padding: 0px 40px;
+  max-width: 1000px;
+  margin: 0 auto;
   .page {
     margin-top: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
   }
-  .edit{
-    margin-left: 20px;
+  /deep/ .el-table {
+    border: 3px solid #dfe6ec;
+    box-shadow: 0 2px 12px 0 rgba(0,0,0,0.1);
+
+    &::before {
+      height: 3px;
+    }
+
+    th, td {
+      border-right: 3px solid #dfe6ec;
+      border-bottom: 3px solid #dfe6ec;
+    }
+
+    .el-table__empty-block {
+      display: none;
+    }
   }
 }
 </style>

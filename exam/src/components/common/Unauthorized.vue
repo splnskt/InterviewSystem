@@ -5,7 +5,7 @@
       <button @click="goBack">返回首页</button>
     </div>
   </template>
-  
+
   <script>
   export default {
     methods: {
@@ -15,35 +15,34 @@
     }
   }
   </script>
-  
+
   <style scoped>
   .unauthorized {
     text-align: center;
     margin-top: 100px;
   }
-  
+
   .unauthorized h1 {
     font-size: 24px;
-    color: #d9534f; /* 红色，用于突出警告 */
+    color: #3CB371; /* 浅薄荷绿色，用于突出警告 */
   }
-  
+
   .unauthorized p {
     font-size: 18px;
     color: #333;
     margin-bottom: 20px;
   }
-  
+
   .unauthorized button {
     padding: 10px 20px;
-    background-color: #0275d8; /* 蓝色按钮 */
+    background-color: #3CB371; /* 浅薄荷绿色按钮 */
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
   }
-  
+
   .unauthorized button:hover {
-    background-color: #025aa5; /* 深色的蓝色 */
+    background-color: #98FFB3; /* 浅薄荷绿色 */
   }
   </style>
-  

@@ -1,142 +1,72 @@
 <!--考生答题界面-->
 <template>
   <div id="answer">
-    <!--顶部信息栏-->
-     <div class="top">
-       <ul class="item">
-         <li><i class="iconfont icon-menufold icon20" ref="toggle" @click="slider_flag = !slider_flag"></i></li>
-         <li>{{examData.type}}-{{examData.source}}</li>
-         <li @click="flag = !flag">
-           <i class="iconfont icon-user icon20"></i>
-           <div class="msg"  v-if="flag" @click="flag = !flag">
-             <p>姓名：{{userInfo.name}}</p>
-             <p>准考证号:  {{userInfo.id}}</p>
-           </div>
-         </li>
-         <li><i class="iconfont icon-arrLeft icon20"></i></li>
-       </ul>
-     </div>
-     <div class="flexarea">
-        <!--左边题目编号区-->
-        <transition name="slider-fade">
-          <div class="left" v-if="slider_flag">
-            <ul class="l-top">
-              <li>
-                <a href="javascript:;"></a>
-                <span>当前</span>
-              </li>
-              <li>
-                <a href="javascript:;"></a>
-                <span>未答</span>
-              </li>
-              <li>
-                <a href="javascript:;"></a>
-                <span>已答</span>
-              </li>
-              <li>
-                <a href="javascript:;"></a>
-                <span>标记</span>
-              </li>
-            </ul>
-            <div class="l-bottom">
-              <div class="item">
-                <p>选择题部分</p>
-                <ul>
-                  <li v-for="(list, index1) in topic[1]" :key="index1">
-                    <a href="javascript:;" 
-                      @click="change(index1)"
-                      :class="{'border': index == index1 && currentType == 1,'bg': bg_flag && topic[1][index1].isClick == true}">
-                      <span :class="{'mark': topic[1][index1].isMark == true}"></span>
-                      {{index1+1}}
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              <div class="item">
-                <p>填空题部分</p>
-                <ul>
-                  <li v-for="(list, index2) in topic[2]" :key="index2">
-                    <a href="javascript:;" @click="fill(index2)" :class="{'border': index == index2 && currentType == 2,'bg': fillAnswer[index2][3] == true}"><span :class="{'mark': topic[2][index2].isMark == true}"></span>{{topicCount[0]+index2+1}}</a>
-                  </li>
-                </ul>
-              </div>
-              <div class="item">
-                <p>判断题部分</p>
-                <ul>
-                  <li v-for="(list, index3) in topic[3]" :key="index3">
-                    <a href="javascript:;" @click="judge(index3)" :class="{'border': index == index3 && currentType == 3,'bg': bg_flag && topic[3][index3].isClick == true}"><span :class="{'mark': topic[3][index3].isMark == true}"></span>{{topicCount[0]+topicCount[1]+index3+1}}</a>
-                  </li>
-                </ul>
-              </div>
-              <div class="final" @click="commit()">结束考试</div>
+    <div class="flexarea">
+      <!-- 右边答题区域 -->
+      <transition name="slider-fade">
+      <div class="right">
+        <div class="title">
+          <p>{{title}}</p>
+          <i class="iconfont icon-right auto-right"></i>
+          <span>全卷共{{topicCount[0] + topicCount[1] + topicCount[2]}}题  <i class="iconfont icon-time"></i>倒计时：<b>{{time}}</b>分钟</span>
+        </div>
+        <div class="content">
+          <p class="topic"><span class="number">{{number}}</span>{{showQuestion}}</p>
+          <div v-if="currentType == 1">
+            <el-radio-group v-model="radio[index]" @change="getChangeLabel" >
+              <el-radio :label="1">{{showAnswer.answerA}}</el-radio>
+              <el-radio :label="2">{{showAnswer.answerB}}</el-radio>
+              <el-radio :label="3">{{showAnswer.answerC}}</el-radio>
+              <el-radio :label="4">{{showAnswer.answerD}}</el-radio>
+            </el-radio-group>
+            <div class="analysis" v-if="isPractice">
+              <ul>
+                <li> <el-tag type="success">正确姿势：</el-tag><span class="right">{{reduceAnswer.rightAnswer}}</span></li>
+                <li><el-tag>题目解析：</el-tag></li>
+                <li>{{reduceAnswer.analysis == null ? '暂无解析': reduceAnswer.analysis}}</li>
+              </ul>
             </div>
           </div>
-        </transition>  
-        <!--右边选择答题区-->
-        <transition name="slider-fade">
-        <div class="right">
-          <div class="title">
-            <p>{{title}}</p>
-            <i class="iconfont icon-right auto-right"></i>
-            <span>全卷共{{topicCount[0] + topicCount[1] + topicCount[2]}}题  <i class="iconfont icon-time"></i>倒计时：<b>{{time}}</b>分钟</span>
-          </div>
-          <div class="content">
-            <p class="topic"><span class="number">{{number}}</span>{{showQuestion}}</p>
-            <div v-if="currentType == 1">
-              <el-radio-group v-model="radio[index]" @change="getChangeLabel" >
-                <el-radio :label="1">{{showAnswer.answerA}}</el-radio>
-                <el-radio :label="2">{{showAnswer.answerB}}</el-radio>
-                <el-radio :label="3">{{showAnswer.answerC}}</el-radio>
-                <el-radio :label="4">{{showAnswer.answerD}}</el-radio>
-              </el-radio-group>
-              <div class="analysis" v-if="isPractice">
-                <ul>
-                  <li> <el-tag type="success">正确姿势：</el-tag><span class="right">{{reduceAnswer.rightAnswer}}</span></li>
-                  <li><el-tag>题目解析：</el-tag></li>
-                  <li>{{reduceAnswer.analysis == null ? '暂无解析': reduceAnswer.analysis}}</li>
-                </ul>
-              </div>
+          <div class="fill" v-if="currentType == 2">
+            <div v-for="(item,currentIndex) in part" :key="currentIndex">
+              <el-input placeholder="请填在此处"
+                v-model="fillAnswer[index][currentIndex]"
+                clearable
+                @blur="fillBG">
+              </el-input>
             </div>
-            <div class="fill" v-if="currentType == 2">
-              <div v-for="(item,currentIndex) in part" :key="currentIndex">
-                <el-input placeholder="请填在此处"
-                  v-model="fillAnswer[index][currentIndex]"
-                  clearable
-                  @blur="fillBG">
-                </el-input>
-              </div>
-              <div class="analysis" v-if="isPractice">
-                <ul>
-                  <li> <el-tag type="success">正确姿势：</el-tag><span class="right">{{topic[2][index].answer}}</span></li>
-                  <li><el-tag>题目解析：</el-tag></li>
-                  <li>{{topic[2][index].analysis == null ? '暂无解析': topic[2][index].analysis}}</li>
-                </ul>
-              </div>
-            </div>
-            <div class="judge" v-if="currentType == 3">
-              <el-radio-group v-model="judgeAnswer[index]" @change="getJudgeLabel" v-if="currentType == 3">
-                <el-radio :label="1">正确</el-radio>
-                <el-radio :label="2">错误</el-radio>
-              </el-radio-group>
-              <div class="analysis" v-if="isPractice">
-                <ul>
-                  <li> <el-tag type="success">正确姿势：</el-tag><span class="right">{{topic[3][index].answer}}</span></li>
-                  <li><el-tag>题目解析：</el-tag></li>
-                  <li>{{topic[3][index].analysis == null ? '暂无解析': topic[3][index].analysis}}</li>
-                </ul>
-              </div>
+            <div class="analysis" v-if="isPractice">
+              <ul>
+                <li> <el-tag type="success">正确姿势：</el-tag><span class="right">{{topic[2][index].answer}}</span></li>
+                <li><el-tag>题目解析：</el-tag></li>
+                <li>{{topic[2][index].analysis == null ? '暂无解析': topic[2][index].analysis}}</li>
+              </ul>
             </div>
           </div>
-          <div class="operation">
-            <ul class="end">
-              <li @click="previous()"><i class="iconfont icon-previous"></i><span>上一题</span></li>
-              <li @click="mark()"><i class="iconfont icon-mark-o"></i><span>标记</span></li>
-              <li @click="next()"><span>下一题</span><i class="iconfont icon-next"></i></li>
-            </ul>
+          <div class="judge" v-if="currentType == 3">
+            <el-radio-group v-model="judgeAnswer[index]" @change="getJudgeLabel" v-if="currentType == 3">
+              <el-radio :label="1">正确</el-radio>
+              <el-radio :label="2">错误</el-radio>
+            </el-radio-group>
+            <div class="analysis" v-if="isPractice">
+              <ul>
+                <li> <el-tag type="success">正确姿势：</el-tag><span class="right">{{topic[3][index].answer}}</span></li>
+                <li><el-tag>题目解析：</el-tag></li>
+                <li>{{topic[3][index].analysis == null ? '暂无解析': topic[3][index].analysis}}</li>
+              </ul>
+            </div>
           </div>
         </div>
-        </transition>
-     </div> 
+        <div class="operation">
+          <ul class="end">
+            <li @click="previous()"><i class="iconfont icon-previous"></i><span>上一题</span></li>
+            <li @click="next()"><span>下一题</span><i class="iconfont icon-next"></i></li>
+            <li @click="commit()"><span>结束考试</span></li>
+          </ul>
+        </div>
+      </div>
+      </transition>
+    </div>
   </div>
 </template>
 
@@ -155,7 +85,7 @@ export default {
       slider_flag: true, //左侧显示隐藏标识符
       flag: false, //个人信息显示隐藏标识符
       currentType: 1, //当前题型类型  1--选择题  2--填空题  3--判断题
-      radio: [], //保存考生所有选择题的选项
+      radio: [], //保存考生所有选择的选项
       title: "请选择正确的选项",
       index: 0, //全局index
       userInfo: { //用户信息
@@ -202,7 +132,7 @@ export default {
       this.userInfo.id = this.$cookies.get("cid")
     },
     calcuScore() { //计算答题分数
-      
+
     },
     getExamData() { //获取当前试卷所有信息
       let date = new Date()
@@ -288,7 +218,7 @@ export default {
           let part= this.showQuestion.split("()").length -1 //根据题目中括号的数量确定填空横线数量
           this.part = part
           this.number = this.topicCount[0] + index + 1
-        } 
+        }
       }else if(index >= len) {
         this.index = 0
         this.judge(this.index)
@@ -324,7 +254,7 @@ export default {
         data[this.index]["isClick"] = true
       }
       /* 保存学生答题选项 */
-      this.topic1Answer[this.index] = val 
+      this.topic1Answer[this.index] = val
     },
     getJudgeLabel(val) {  //获取判断题作答选项
       this.judgeAnswer[this.index] = val
@@ -337,10 +267,10 @@ export default {
     previous() { //上一题
       this.index --
       switch(this.currentType) {
-        case 1: 
+        case 1:
           this.change(this.index)
           break
-        case 2: 
+        case 2:
           this.fill(this.index)
           break
         case 3:
@@ -351,10 +281,10 @@ export default {
     next() { //下一题
       this.index ++
       switch(this.currentType) {
-        case 1: 
+        case 1:
           this.change(this.index)
           break
-        case 2: 
+        case 2:
           this.fill(this.index)
           break
         case 3:
@@ -453,11 +383,11 @@ export default {
           }).then(res => {
             if(res.data.code == 200) {
               this.$router.push({path:'/studentScore',query: {
-                score: finalScore, 
+                score: finalScore,
                 startTime: this.startTime,
                 endTime: this.endTime
               }})
-            }  
+            }
           })
         }).catch(() => {
           console.log("继续答题")
@@ -486,15 +416,15 @@ export default {
 
 <style lang="less">
 .iconfont.icon-time {
-  color: #2776df;
+  color: #3CB371;
   margin: 0px 6px 0px 20px;
 }
 .analysis {
   margin-top: 20px;
   .right {
-    color: #2776df;
+    color: #3CB371;
     font-size: 18px;
-    border: 1px solid #2776df;
+    border: 1px solid #3CB371;
     padding: 0px 6px;
     border-radius: 4px;
     margin-left: 20px;
@@ -550,32 +480,17 @@ export default {
   opacity: 0;
 }
 
-.operation .end li:nth-child(2) {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: rgb(39, 118, 223);
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  color: #fff;
-}
-.operation .end li {
-  cursor: pointer;
-  margin: 0 100px;
-}
-.operation {
-  background-color: #fff;
-  border-radius: 4px;
-  padding: 10px 0px;
-  margin-right: 10px;
-}
 .operation .end {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: rgb(39, 118, 223);
+  color: #3CB371;
+}
+.operation .end li {
+  cursor: pointer;
+  margin: 0 40px;
+  display: flex;
+  align-items: center;
 }
 .content .number {
   display: inline-flex;
@@ -583,7 +498,7 @@ export default {
   align-items: center;
   width: 20px;
   height: 20px;
-  background-color: rgb(39, 118, 223);
+  background-color: #3CB371;
   border-radius: 4px;
   margin-right: 4px;
 }
@@ -592,7 +507,7 @@ export default {
 }
 .content .topic {
   padding: 20px 0px;
-  padding-top: 30px; 
+  padding-top: 30px;
 }
 .right .content {
   background-color: #fff;
@@ -619,7 +534,7 @@ export default {
 }
 .auto-right {
   margin-left: auto;
-  color: #2776df;
+  color: #3CB371;
   margin-right: 10px;
 }
 .right .title {
@@ -678,14 +593,14 @@ export default {
   justify-content: space-around;
   flex-wrap: wrap;
 }
-.l-bottom .item ul li a { 
+.l-bottom .item ul li a {
   position: relative;
   justify-content: center;
   display: inline-flex;
   align-items: center;
   width: 30px;
   height: 30px;
-  border-radius: 50%;
+  border-radius: 4px;
   background-color: #fff;
   border: 1px solid #eee;
   text-align: center;
@@ -715,6 +630,7 @@ export default {
 }
 .left .l-top li:nth-child(4) a {
   position: relative;
+  border-radius: 4px;
   border: 1px solid #eee;
 }
 .left .l-top li:nth-child(4) a::before {
@@ -725,7 +641,7 @@ export default {
   background-color: red;
   border-radius: 50%;
   top: 0px;
-  left: 16px;
+  right: 0px;
 }
 .left .l-top li {
   display: flex;
@@ -736,7 +652,7 @@ export default {
 .left .l-top li a {
   display: inline-block;
   padding: 10px;
-  border-radius: 50%;
+  border-radius: 4px;
   background-color: #fff;
   border: 1px solid #FF90AA;
 }
@@ -777,5 +693,17 @@ export default {
   font-size: 16px;
   width: 200px;
   text-align: left;
+}
+.operation .end li:last-child {
+  background-color: #3CB371;
+  color: #fff;
+  padding: 8px 15px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: #45cc7d;
+    transform: translateY(-2px);
+  }
 }
 </style>

@@ -4,11 +4,11 @@
     <div class="bg"></div>
     <el-row class="main-container">
       <el-col :lg="8" :xs="16" :md="10" :span="10">
-        <div class="top">
-          <i class="iconfont icon-kaoshi"></i><span class="title">公务员考试系统</span>
-        </div>
         <div class="bottom">
           <div class="container">
+            <div class="system-title">
+              <span>公务员考试系统</span>
+            </div>
             <p class="title">账号登录</p>
             <el-form :label-position="labelPosition" label-width="80px" :model="formLabelAlign">
               <el-form-item label="用户名">
@@ -20,28 +20,21 @@
               <div class="submit">
                 <el-button type="primary" class="row-login" @click="login()">登录</el-button>
               </div>
-              <!-- <div class="options">
-                <p class="find"><a href="javascript:;">找回密码</a></p>
-                <div class="register">
-                  <span>没有账号?</span>
-                  <span><a href="javascript:;">去注册</a></span>
-                </div>
-              </div> -->
+
             </el-form>
           </div>
         </div>
       </el-col>
     </el-row>
     <el-row class="footer">
-      <el-col>
-<!--        <p class="msg2">版权所有 ©2019 &lt;!&ndash;重庆文理学院计科2班余晓江&ndash;&gt; 保留所有权利  <a href="http://beian.miit.gov.cn/" target="_blank">渝ICP备19001371号</a></p>-->
-      </el-col>
+
     </el-row>
-    <section class="remind">
-      <span>管理员账号：9527</span>
-      <span>教师账号：20081001</span>
-      <span>密码都是：123456</span>
-    </section>
+<!--    <section class="remind">-->
+<!--      <span>管理员账号：10086</span>-->
+<!--      <span>面试官账号：20081003</span>-->
+<!--      <span>学生账号：20155009</span>-->
+<!--      <span>密码都是：123456</span>-->
+<!--    </section>-->
   </div>
 </template>
 
@@ -54,7 +47,7 @@ export default {
       role: 2,
       labelPosition: 'left',
       formLabelAlign: {
-        username: '20154084',
+        username: '20155009',
         password: '123456'
       }
     }
@@ -124,7 +117,7 @@ export default {
   color: #606266;
   background-color: #fff;
   border-left: 4px solid #409eff;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 .container {
   margin-bottom: 32px;
@@ -159,7 +152,7 @@ a:link {
 #login .main-container .top {
   margin-top: 100px;
   font-size: 30px;
-  color: #ff962a;
+  color: #3CB371;
   display: flex;
   justify-content: center;
 }
@@ -170,25 +163,37 @@ a:link {
   margin-top: 20px;
 }
 #login .bottom {
-  display:flex;
+  display: flex;
   justify-content: center;
-  background-color:#fff;
-  border-radius: 5px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  background-color: #fff;
+  border-radius: 50px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  margin-top: 100px;
+  padding: 20px 0;
 }
 #login .bottom .title {
   text-align: center;
-  font-size: 30px;
+  font-size: 24px;
+  color: #333;
+  margin: 20px 0 30px;
 }
 .bottom .container .title {
-  margin: 30px 0px;;
+  text-align: center;
+  font-size: 24px;
+  color: #333;
+  margin: 20px 0 30px;
 }
 .bottom .submit .row-login {
   width: 100%;
-  background-color: #04468b;
-  border-color: #04468b;
-  margin: 20px 0px 10px 0px;
+  background-color: #3CB371;
+  border-color: #3CB371;
+  margin: 30px 0 20px;
   padding: 15px 20px;
+  border-radius: 25px;
+}
+.bottom .submit .row-login:hover {
+  background-color: #45cc7d;
+  border-color: #45cc7d;
 }
 .bottom .submit {
   display: flex;
@@ -210,14 +215,33 @@ a:link {
 }
 .bottom .options {
   margin-bottom: 40px;
-  color: #ff962a;
+  color: #3CB371;
   display: flex;
   justify-content: space-between;
 }
 .bottom .options > a {
-  color: #ff962a;
+  color: #3CB371;
 }
 .bottom .options .register span:nth-child(1) {
   color: #8C8C8C;
+}
+.system-title {
+  text-align: center;
+  font-size: 28px;
+  color: #3CB371;
+  font-weight: bold;
+  margin: 20px 0 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #eee;
+}
+.el-form {
+  padding: 0 20px;
+}
+.el-form-item {
+  margin-bottom: 25px;
+}
+.el-input__inner {
+  border-radius: 20px;
+  padding: 0 20px;
 }
 </style>

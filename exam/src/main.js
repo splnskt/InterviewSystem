@@ -22,9 +22,6 @@ new Vue({
   el: '#app',
   router,
   store,
-  created() {
-    this.$store.dispatch('initializeStore'); // 初始化数据
-  },
   render: h => h(App),
   components: { App },
   template: '<App/>'

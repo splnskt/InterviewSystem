@@ -1,162 +1,174 @@
-// 添加题库
 <template>
   <div class="add">
-    <el-tabs v-model="activeName">
-    <el-tab-pane name="first">
-      <span slot="label"><i class="el-icon-circle-plus"></i>添加试题</span>
-      <section class="append">
+    <div class="add-header">
+      <h2>添加试题</h2>
+      <p class="subtitle">请选择题目类型并填写相关信息</p>
+    </div>
+    <div class="add-content">
+      <div class="left-panel">
         <ul>
           <li>
-            <span>题目类型:</span>
-            <el-select v-model="optionValue" placeholder="请选择题型" class="w150">
-              <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select>
+            <div class="form-group">
+              <label class="form-label">题目类型</label>
+              <el-select v-model="optionValue" placeholder="请选择题型" class="w150">
+                <el-option
+                  v-for="item in options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+            </div>
           </li>
           <li v-if="optionValue == '选择题'">
-            <span>所属章节：</span>
-            <el-input
-              placeholder="请输入对应章节"
-              v-model="postChange.section"
-              class="w150"
-              clearable>
-            </el-input>
+            <div class="form-group">
+              <label class="form-label">所属章节</label>
+              <el-input
+                placeholder="请输入对应模块"
+                v-model="postChange.section"
+                class="w150"
+                clearable>
+              </el-input>
+            </div>
           </li>
-          <li v-if="optionValue == '填空题'">
-            <span>所属章节：</span>
-            <el-input
-              placeholder="请输入对应章节"
-              v-model="postFill.section"
-              class="w150"
-              clearable>
-            </el-input>
+          <li v-if="optionValue == '解答题'">
+            <div class="form-group">
+              <label class="form-label">所属章节</label>
+              <el-input
+                placeholder="请输入对应模块"
+                v-model="postFill.section"
+                class="w150"
+                clearable>
+              </el-input>
+            </div>
           </li>
           <li v-if="optionValue == '判断题'">
-            <span>所属章节：</span>
-            <el-input
-              placeholder="请输入对应章节"
-              v-model="postJudge.section"
-              class="w150"
-              clearable>
-            </el-input>
+            <div class="form-group">
+              <label class="form-label">所属章节</label>
+              <el-input
+                placeholder="请输入对应章节"
+                v-model="postJudge.section"
+                class="w150"
+                clearable>
+              </el-input>
+            </div>
           </li>
           <li v-if="optionValue == '选择题'">
-            <span>难度等级:</span>
-            <el-select v-model="postChange.level" placeholder="选择难度等级" class="w150">
-              <el-option
-                v-for="item in levels"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select>
+            <div class="form-group">
+              <label class="form-label">难度等级</label>
+              <el-select v-model="postChange.level" placeholder="选择难度等级" class="w150">
+                <el-option
+                  v-for="item in levels"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+            </div>
           </li>
-          <li v-if="optionValue == '填空题'">
-            <span>难度等级:</span>
-            <el-select v-model="postFill.level" placeholder="选择难度等级" class="w150">
-              <el-option
-                v-for="item in levels"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select>
+          <li v-if="optionValue == '解答题'">
+            <div class="form-group">
+              <label class="form-label">难度等级</label>
+              <el-select v-model="postFill.level" placeholder="选择难度等级" class="w150">
+                <el-option
+                  v-for="item in levels"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+            </div>
           </li>
           <li v-if="optionValue == '判断题'">
-            <span>难度等级:</span>
-            <el-select v-model="postJudge.level" placeholder="选择难度等级" class="w150">
-              <el-option
-                v-for="item in levels"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select>
+            <div class="form-group">
+              <label class="form-label">难度等级</label>
+              <el-select v-model="postJudge.level" placeholder="选择难度等级" class="w150">
+                <el-option
+                  v-for="item in levels"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+            </div>
           </li>
           <li v-if="optionValue == '选择题'">
-            <span>正确选项:</span>
-            <el-select v-model="postChange.rightAnswer" placeholder="选择正确答案" class="w150">
-              <el-option
-                v-for="item in rights"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select>
+            <div class="form-group">
+              <label class="form-label">正确选项</label>
+              <el-select v-model="postChange.rightAnswer" placeholder="选择正确答案" class="w150">
+                <el-option
+                  v-for="item in rights"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+            </div>
           </li>
         </ul>
-        <!-- 选择题部分 -->
+      </div>
+      <div class="right-panel">
         <div class="change" v-if="optionValue == '选择题'">
-          <div class="title">
-            <el-tag>题目:</el-tag><span>在下面的输入框中输入题目</span>
+          <div class="question-box">
+            <h3>题目内容</h3>
             <el-input
               type="textarea"
               rows="4"
               v-model="postChange.question"
               placeholder="请输入题目内容"
               resize="none"
-              class="answer">
+              class="question-input">
             </el-input>
           </div>
-          <div class="options">
+          <div class="options-box">
+            <h3>选项设置</h3>
             <ul>
               <li>
-                <el-tag type="success">A</el-tag>
-                <el-input
-                  placeholder="请输入选项A的内容"
-                  v-model="postChange.answerA"
-                  clearable="">
-                </el-input>
+                <div class="option-item">
+                  <span class="option-label">A</span>
+                  <el-input
+                    placeholder="请输入选项A的内容"
+                    v-model="postChange.answerA"
+                    clearable="">
+                  </el-input>
+                </div>
               </li>
               <li>
-                <el-tag type="success">B</el-tag>
-                <el-input
-                  placeholder="请输入选项B的内容"
-                  v-model="postChange.answerB"
-                  clearable="">
-                </el-input>
+                <div class="option-item">
+                  <span class="option-label">B</span>
+                  <el-input
+                    placeholder="请输入选项B的内容"
+                    v-model="postChange.answerB"
+                    clearable="">
+                  </el-input>
+                </div>
               </li>
               <li>
-                <el-tag type="success">C</el-tag>
-                <el-input
-                  placeholder="请输入选项C的内容"
-                  v-model="postChange.answerC"
-                  clearable="">
-                </el-input>
+                <div class="option-item">
+                  <span class="option-label">C</span>
+                  <el-input
+                    placeholder="请输入选项C的内容"
+                    v-model="postChange.answerC"
+                    clearable="">
+                  </el-input>
+                </div>
               </li>
               <li>
-                <el-tag type="success">D</el-tag>
-                <el-input
-                  placeholder="请输入选项D的内容"
-                  v-model="postChange.answerD"
-                  clearable="">
-                </el-input>
+                <div class="option-item">
+                  <span class="option-label">D</span>
+                  <el-input
+                    placeholder="请输入选项D的内容"
+                    v-model="postChange.answerD"
+                    clearable="">
+                  </el-input>
+                </div>
               </li>
             </ul>
           </div>
-          <div class="title">
-            <el-tag>解析:</el-tag><span>在下面的输入框中输入题目解析</span>
-            <el-input
-              type="textarea"
-              rows="4"
-              v-model="postChange.analysis"
-              placeholder="请输入答案解析"
-              resize="none"
-              class="answer">
-            </el-input>
-          </div>
-          <div class="submit">
-            <el-button type="primary" @click="changeSubmit()">立即添加</el-button>
-          </div>
         </div>
-        <!-- 填空题部分 -->
-        <div class="change fill" v-if="optionValue == '填空题'">
+        <div class="change fill" v-if="optionValue == '解答题'">
           <div class="title">
-            <el-tag>题目:</el-tag><span>输入题目,形如--从计算机网络系统组成的角度看，计算机网络可以分为()和()。注意需要考生答题部分一定要用括号（英文半角）括起来。</span>
+            <el-tag>题目:</el-tag><span>输入题目,注意需要考生答题部分一定要用括号（英文半角）括起来。</span>
             <el-input
               type="textarea"
               rows="4"
@@ -185,7 +197,6 @@
             <el-button type="primary" @click="fillSubmit()">立即添加</el-button>
           </div>
         </div>
-        <!-- 判断题 -->
         <div class="change judge" v-if="optionValue == '判断题'">
           <div class="title">
             <el-tag>题目:</el-tag><span>在下面的输入框中输入题目</span>
@@ -217,39 +228,12 @@
             <el-button type="primary" @click="judgeSubmit()">立即添加</el-button>
           </div>
         </div>
-      </section>
-    </el-tab-pane>
-    <el-tab-pane name="second">
-      <span slot="label"><i class="iconfont icon-daoru-tianchong"></i>在线组卷</span>
-      <div class="box">
-        <ul>
-          <li>
-            <span>试题难度:</span>
-            <el-select v-model="difficultyValue" placeholder="试题难度" class="w150">
-              <el-option
-                v-for="item in difficulty"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select>
-          </li>
-          <li>
-            <span>选择题数量：</span> <el-input type="text" v-model="changeNumber"></el-input>
-          </li>
-          <li>
-            <span>填空题数量：</span> <el-input type="text" v-model="fillNumber"></el-input>
-          </li>
-          <li>
-            <span>判断题数量：</span> <el-input type="text" v-model="judgeNumber"></el-input>
-          </li>
-          <li>
-            <el-button type="primary" @click="create()">立即组卷</el-button>
-          </li>
-        </ul>
       </div>
-    </el-tab-pane>
-  </el-tabs>
+    </div>
+    <div class="add-footer">
+      <el-button type="primary" size="large" @click="submitQuestion">保存题目</el-button>
+      <el-button size="large" @click="resetForm">重置</el-button>
+    </div>
   </div>
 </template>
 
@@ -267,8 +251,8 @@ export default {
           label: '选择题'
         },
         {
-          value: '填空题',
-          label: '填空题'
+          value: '解答题',
+          label: '解答题'
         },
         {
           value: '判断题',
@@ -384,7 +368,7 @@ export default {
           fillNumber: this.fillNumber,
           judgeNumber: this.judgeNumber,
           paperId: this.paperId,
-          subject: '计算机网络' //题目数量太少，指定为计算机网络出题
+          subject: '笔试题' //题目数量太少，指定为计算机网络出题
         }
       }).then(res => {
         console.log(res)
@@ -508,115 +492,321 @@ export default {
           })
         })
       })
-    }
+    },
+    // 保存题目
+    submitQuestion() {
+      if (this.optionValue === '选择题') {
+        this.changeSubmit();
+      } else if (this.optionValue === '解答题') {
+        this.fillSubmit();
+      } else if (this.optionValue === '判断题') {
+        this.judgeSubmit();
+      } else {
+        this.$message.warning('请选择题目类型');
+      }
+    },
+    // 重置表单
+    resetForm() {
+      if (this.optionValue === '选择题') {
+        this.postChange = {
+          subject: '',
+          section: '',
+          level: '',
+          question: '',
+          answerA: '',
+          answerB: '',
+          answerC: '',
+          answerD: '',
+          rightAnswer: ''
+        };
+      } else if (this.optionValue === '解答题') {
+        this.postFill = {
+          subject: '',
+          section: '',
+          level: '',
+          question: '',
+          answer: '',
+          analysis: ''
+        };
+      } else if (this.optionValue === '判断题') {
+        this.postJudge = {
+          subject: '',
+          section: '',
+          level: '',
+          question: '',
+          answer: '',
+          analysis: ''
+        };
+      }
+
+      this.$message({
+        message: '已重置表单',
+        type: 'success'
+      });
+    },
   },
 };
 </script>
 
 <style lang="less" scoped>
 .add {
-  margin: 0px 40px;
-  .box {
-    padding: 0px 20px;
-    ul li {
-      margin: 10px 0px;
-      display: flex;
-      align-items: center;
-      .el-input {
-        width: 6%;
-      }
-      .w150 {
-        margin-left: 20px;
-        width: 7%;
+  padding: 30px;
+  background: linear-gradient(135deg, #f6f8fc 0%, #e9f2f7 100%);
+  min-height: 100vh;
+
+  .add-header {
+    text-align: center;
+    margin-bottom: 50px;
+    animation: fadeInDown 0.8s ease-out;
+
+    h2 {
+      font-size: 28px;
+      color: #2c3e50;
+      margin-bottom: 10px;
+      font-weight: 600;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+      position: relative;
+      display: inline-block;
+
+      &:after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 3px;
+        background: linear-gradient(90deg, #3CB371, #4CAF50);
+        border-radius: 3px;
       }
     }
-  }
-  .el-icon-circle-plus {
-    margin-right: 10px;
-  }
-  .icon-daoru-tianchong {
-    margin-right: 10px;
-  }
-  .append {
-    margin: 0px 20px;
-    ul {
-      display: flex;
-      align-items: center;
-      li {
-        margin-right: 20px;
-      }
-    }
-    .change {
+
+    .subtitle {
+      color: #666;
+      font-size: 16px;
       margin-top: 20px;
-      padding: 20px 16px;
-      background-color: #E7F6F6;
-      border-radius: 4px;
-      .title {
-        padding-left: 6px;
-        color: #2f4f4f;
-        span:nth-child(1) {
-          margin-right: 6px;
-        }
-        .answer {
-          margin: 20px 0px 20px 8px;
-        }
-        .el-textarea {
-          width: 98% !important;
-        }
+      opacity: 0.8;
+    }
+  }
+
+  .add-content {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 40px;
+    animation: fadeInUp 0.8s ease-out;
+
+    .left-panel {
+      flex: 1;
+      background: white;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      transition: all 0.3s ease;
+
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.12);
       }
-      .options {
-        ul {
-          display: flex;
-          flex-direction: column;
+
+      .form-group {
+        margin-bottom: 25px;
+
+        .form-label {
+          display: block;
+          margin-bottom: 12px;
+          color: #333;
+          font-weight: 500;
+          font-size: 15px;
+          transition: all 0.3s ease;
+
+          &:hover {
+            color: #3CB371;
+            transform: translateX(5px);
+          }
         }
-        ul li {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          width: 98%;
-          margin: 10px 0px;
-          span {
-            margin-right: 20px;
+
+        .el-select, .el-input {
+          .el-input__inner {
+            border-radius: 8px;
+            border: 2px solid #eef2f7;
+            padding: 10px 15px;
+            transition: all 0.3s ease;
+
+            &:focus {
+              border-color: #3CB371;
+              box-shadow: 0 0 0 3px rgba(60,179,113,0.1);
+            }
           }
         }
       }
-      .submit {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
     }
-    .fill {
-      .fillAnswer {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        span {
-          margin-right: 6px;
+
+    .right-panel {
+      flex: 2;
+      background: white;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      transition: all 0.3s ease;
+
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+      }
+
+      .question-box {
+        margin-bottom: 30px;
+
+        h3 {
+          margin-bottom: 15px;
+          color: #333;
+          font-size: 18px;
+          font-weight: 600;
+          position: relative;
+          padding-left: 15px;
+
+          &:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 20px;
+            background: #3CB371;
+            border-radius: 2px;
+          }
         }
-        .el-input {
-          width: 91% !important;
+
+        .question-input {
+          width: 100%;
+          .el-textarea__inner {
+            border-radius: 12px;
+            border: 2px solid #eef2f7;
+            padding: 15px;
+            transition: all 0.3s ease;
+
+            &:focus {
+              border-color: #3CB371;
+              box-shadow: 0 0 0 3px rgba(60,179,113,0.1);
+            }
+          }
         }
       }
-      .analysis {
-        margin-top: 20px;
-        margin-left: 5px;
+
+      .options-box {
+        h3 {
+          margin-bottom: 20px;
+          color: #333;
+          font-size: 18px;
+          font-weight: 600;
+          position: relative;
+          padding-left: 15px;
+
+          &:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 20px;
+            background: #3CB371;
+            border-radius: 2px;
+          }
+        }
+
+        .option-item {
+          display: flex;
+          align-items: center;
+          margin-bottom: 20px;
+          transition: all 0.3s ease;
+
+          &:hover {
+            transform: translateX(5px);
+          }
+
+          .option-label {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #3CB371, #4CAF50);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin-right: 15px;
+            font-weight: 600;
+            font-size: 16px;
+            box-shadow: 0 4px 10px rgba(60,179,113,0.2);
+          }
+
+          .el-input {
+            .el-input__inner {
+              border-radius: 8px;
+              border: 2px solid #eef2f7;
+              padding: 10px 15px;
+              transition: all 0.3s ease;
+
+              &:focus {
+                border-color: #3CB371;
+                box-shadow: 0 0 0 3px rgba(60,179,113,0.1);
+              }
+            }
+          }
+        }
       }
     }
-    .judge {
-      .judgeAnswer {
-        margin-left: 20px;
-        margin-bottom: 20px;
+  }
+
+  .add-footer {
+    text-align: center;
+    animation: fadeInUp 1s ease-out;
+    margin-top: 50px;
+
+    .el-button {
+      padding: 15px 50px;
+      font-size: 16px;
+      border-radius: 12px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+
+      &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+      }
+
+      &.el-button--primary {
+        background: linear-gradient(135deg, #3CB371, #4CAF50);
+        border: none;
+
+        &:hover {
+          background: linear-gradient(135deg, #4CAF50, #3CB371);
+        }
       }
     }
-    .w150 {
-      width: 150px;
-    }
-    li:nth-child(2) {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 </style>

@@ -1,5 +1,3 @@
-// TeacherInterviewRoom.vue
-
 <template>
   <div class="interview-room">
     <div class="header">
@@ -7,6 +5,9 @@
       <div class="actions">
         <el-button size="mini" @click="exitRoom">退出房间</el-button>
         <el-button size="mini" type="danger" @click="endInterview">结束面试</el-button>
+        <!-- 录制控制按钮 -->
+        <el-button size="mini" type="primary" @click="startRecording" v-if="!isRecording">开始录制</el-button>
+        <el-button size="mini" type="warning" @click="stopRecording" v-if="isRecording">停止录制</el-button>
       </div>
     </div>
     <div class="video-container">
@@ -18,6 +19,10 @@
         <video ref="remoteVideo" autoplay playsinline></video>
         <p>远程视频</p>
       </div>
+    </div>
+    <div v-if="recordedBlobUrl" style="margin-top:20px;">
+      <p>录制完成，可下载：</p>
+      <a :href="recordedBlobUrl" download="interview_record.webm">下载录制视频</a>
     </div>
   </div>
 </template>
@@ -36,19 +41,19 @@ export default {
       peerConnection: null,
       remoteSocketId: null,
       isOfferSent: false,
+      // 录制相关数据
+      recorder: null,
+      recordedChunks: [],
+      recordedBlobUrl: null,
+      isRecording: false,
+      remoteStream: null, // 存储远程流，用于录制
     };
   },
   methods: {
-    /**
-     * 获取当前用户的用户名
-     */
     getUsername() {
       return this.$cookies.get("cname") || '';
     },
 
-    /**
-     * 初始化 WebRTC 连接
-     */
     async initWebRTC() {
       try {
         // 获取本地媒体流
@@ -69,9 +74,6 @@ export default {
       }
     },
 
-    /**
-     * 创建 PeerConnection 并设置事件监听
-     */
     createPeerConnection() {
       const configuration = {
         iceServers: [{ urls: 'stun:stun.l.google.com:19302' }],
@@ -89,6 +91,7 @@ export default {
         if (this.$refs.remoteVideo) {
           if (this.$refs.remoteVideo.srcObject !== event.streams[0]) {
             this.$refs.remoteVideo.srcObject = event.streams[0];
+            this.remoteStream = event.streams[0];
             console.log('远程流已添加');
           }
         } else {
@@ -114,11 +117,8 @@ export default {
       };
     },
 
-    /**
-     * 连接到 Socket.IO 信令服务器
-     */
     connectSocket() {
-      this.socket = io('http://localhost:3000'); // server.js 的地址
+      this.socket = io('http://localhost:3000'); // 与 server.js 对应的信令服务器地址
 
       this.socket.on('connect', () => {
         console.log('Socket.IO 已连接');
@@ -174,7 +174,7 @@ export default {
         console.log('面试已结束');
         this.$message.info('面试已结束');
         this.disconnect();
-        this.$router.push('/teacher/interviews'); // 根据需要修改重定向路径
+        this.$router.push('/teacher/interviews');
       });
 
       this.socket.on('user-disconnected', (socketId) => {
@@ -193,9 +193,6 @@ export default {
       });
     },
 
-    /**
-     * 发送 Offer 给远程用户
-     */
     async sendOffer() {
       if (this.isOfferSent) return;
       try {
@@ -210,17 +207,11 @@ export default {
       }
     },
 
-    /**
-     * 退出房间并断开连接
-     */
     exitRoom() {
       this.disconnect();
       this.$router.push('/teacher/interviews');
     },
 
-    /**
-     * 结束面试并断开连接
-     */
     async endInterview() {
       try {
         // 1. 更新面试状态到后端 Spring Boot
@@ -248,9 +239,6 @@ export default {
       }
     },
 
-    /**
-     * 断开所有连接并清理资源
-     */
     disconnect() {
       if (this.socket) {
         this.socket.disconnect();
@@ -266,6 +254,36 @@ export default {
       }
       if (this.$refs.remoteVideo) {
         this.$refs.remoteVideo.srcObject = null;
+      }
+    },
+
+    // 开始录制远程视频
+    startRecording() {
+      if (!this.remoteStream) {
+        this.$message.error('当前无法获取远程流进行录制');
+        return;
+      }
+      this.recordedChunks = [];
+      this.recorder = new MediaRecorder(this.remoteStream, { mimeType: 'video/webm; codecs=vp9' });
+      this.recorder.ondataavailable = (event) => {
+        if (event.data.size > 0) {
+          this.recordedChunks.push(event.data);
+        }
+      };
+      this.recorder.onstop = () => {
+        const blob = new Blob(this.recordedChunks, { type: 'video/webm' });
+        this.recordedBlobUrl = URL.createObjectURL(blob);
+        this.$message.success('录制完成！您可以下载视频');
+      };
+      this.recorder.start();
+      this.isRecording = true;
+      this.$message.info('开始录制...');
+    },
+
+    stopRecording() {
+      if (this.recorder && this.recorder.state === 'recording') {
+        this.recorder.stop();
+        this.isRecording = false;
       }
     },
   },

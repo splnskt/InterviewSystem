@@ -3,10 +3,9 @@
   <div class="all">
     <el-table :data="pagination.records" border>
       <el-table-column fixed="left" prop="studentName" label="姓名" width="180"></el-table-column>
-      <el-table-column prop="institute" label="学院" width="200"></el-table-column>
+      <el-table-column prop="institute" label="岗位" width="200"></el-table-column>
       <el-table-column prop="major" label="专业" width="200"></el-table-column>
       <el-table-column prop="grade" label="年级" width="200"></el-table-column>
-      <el-table-column prop="clazz" label="班级" width="100"></el-table-column>
       <el-table-column prop="sex" label="性别" width="120"></el-table-column>
       <el-table-column prop="tel" label="联系方式" width="120"></el-table-column>
       <el-table-column fixed="right" label="操作" width="150">
@@ -152,19 +151,59 @@ export default {
 <style lang="less" scoped>
 .all {
   padding: 0px 40px;
+  max-width: 1000px;
+  margin: 0 auto;
   .page {
     margin-top: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
   }
-  .edit {
-    margin-left: 20px;
-  }
-  .el-table tr {
-    background-color: #dd5862 !important;
+  /deep/ .el-table {
+    border: 3px solid #dfe6ec;
+    box-shadow: 0 2px 12px 0 rgba(0,0,0,0.1);
+
+    &::before {
+      height: 3px;
+    }
+
+    th, td {
+      border-right: 3px solid #dfe6ec;
+      border-bottom: 3px solid #dfe6ec;
+    }
+
+    .warning-row {
+      background-color: #f8f8f8 !important;
+    }
+
+    .success-row {
+      background-color: #ffffff !important;
+    }
+
+    .el-table__fixed {
+      height: 100% !important;
+      border-right: 3px solid #dfe6ec;
+    }
+
+    .el-table__fixed::before {
+      height: 3px;
+    }
+
+    .el-table__fixed-right {
+      height: 100% !important;
+      border-left: 3px solid #dfe6ec;
+    }
+
+    .el-table__fixed-right::before {
+      height: 3px;
+    }
+
+    .el-table__empty-block {
+      display: none;
+    }
   }
 }
+
 .el-table .warning-row {
   background: #000 !important;
 }

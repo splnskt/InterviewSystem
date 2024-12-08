@@ -1,4 +1,4 @@
-<template>
+<template> 
   <div class="teacher-interview-list">
     <h2>教师面试管理</h2>
     <el-table
@@ -34,6 +34,7 @@
         label="面试状态"
         width="120"
       ></el-table-column>
+      <!-- 移除预约状态列 -->
       <el-table-column label="操作" width="250">
         <template slot-scope="scope">
           <el-dropdown trigger="click">
@@ -85,7 +86,6 @@ export default {
   methods: {
     fetchInterviewRooms() {
       this.loading = true;
-      // 调用 Vuex 的 action 获取所有面试列表
       this.$store
         .dispatch('fetchInterviewRooms')
         .then(() => {
@@ -98,7 +98,6 @@ export default {
         });
     },
     viewInterviewDetail(id) {
-      // 跳转到面试详情页面
       this.$router.push(`/teacher/interview/${id}`);
     },
     startInterview(interviewId) {
@@ -107,7 +106,6 @@ export default {
         cancelButtonText: '取消',
         type: 'warning',
       }).then(() => {
-        // 调用 Vuex 的 startInterview action
         this.$store
           .dispatch('startInterview', interviewId)
           .then(() => {
@@ -115,7 +113,6 @@ export default {
               type: 'success',
               message: '面试已开始',
             });
-            // 跳转到教师的 InterviewRoom.vue
             this.$router.push(`/teacher/interviewRoom?id=${interviewId}&peerId=${interviewId}`);
           })
           .catch((error) => {
@@ -127,7 +124,6 @@ export default {
       });
     },
     joinInterview(interviewId, peerId) {
-      // 跳转到教师的面试房间
       this.$router.push(`/teacher/interviewRoom?id=${interviewId}&peerId=${peerId}`);
     },
     deleteInterview(interviewId) {
@@ -136,7 +132,6 @@ export default {
         cancelButtonText: '取消',
         type: 'warning',
       }).then(() => {
-        // 调用 Vuex 的 deleteInterviewRoom action
         this.$store
           .dispatch('deleteInterviewRoom', interviewId)
           .then(() => {
@@ -144,7 +139,6 @@ export default {
               type: 'success',
               message: '面试已删除',
             });
-            // 重新获取面试列表
             this.fetchInterviewRooms();
           })
           .catch((error) => {
@@ -156,7 +150,6 @@ export default {
       });
     },
     formatDate(row, column, cellValue) {
-      // 格式化日期
       if (!cellValue) return '';
       const date = new Date(cellValue);
       return date.toLocaleString();

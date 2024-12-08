@@ -2,9 +2,9 @@
 <template>
   <div class="exam">
     <el-table :data="pagination.records" border :row-class-name="tableRowClassName">
-      <el-table-column fixed="left" prop="subject" label="面试题名称" width="180"></el-table-column>
+      <el-table-column prop="subject" label="试题名称" width="180"></el-table-column>
       <el-table-column prop="question" label="题目信息" width="490"></el-table-column>
-      <el-table-column prop="section" label="所属章节" width="200"></el-table-column>
+      <el-table-column prop="section" label="所属模块" width="200"></el-table-column>
       <el-table-column prop="type" label="题目类型" width="200"></el-table-column>
       <el-table-column prop="score" label="试题分数" width="150"></el-table-column>
       <el-table-column prop="level" label="难度等级" width="133"></el-table-column>
@@ -72,26 +72,57 @@ export default {
 <style lang="less" scoped>
 .exam {
   padding: 0px 40px;
+  max-width: 1000px;
+  margin: 0 auto;
   .page {
     margin-top: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
   }
-  .edit {
-    margin-left: 20px;
-  }
-  .el-table tr {
-    background-color: #DD5862 !important;
+  /deep/ .el-table {
+    border: 3px solid #dfe6ec;
+    box-shadow: 0 2px 12px 0 rgba(0,0,0,0.1);
+
+    &::before {
+      height: 3px;
+    }
+
+    th, td {
+      border-right: 3px solid #dfe6ec;
+      border-bottom: 3px solid #dfe6ec;
+    }
+
+    .warning-row {
+      background-color: #f8f8f8 !important;
+    }
+
+    .success-row {
+      background-color: #ffffff !important;
+    }
+
+    .el-table__fixed {
+      height: 100% !important;
+      border-right: 3px solid #dfe6ec;
+    }
+
+    .el-table__fixed::before {
+      height: 3px;
+    }
+
+    .el-table__fixed-right {
+      height: 100% !important;
+      border-left: 3px solid #dfe6ec;
+    }
+
+    .el-table__fixed-right::before {
+      height: 3px;
+    }
+
+    .el-table__empty-block {
+      display: none;
+    }
   }
 }
-  .el-table .warning-row {
-    background: #000 !important;
-
-  }
-
-  .el-table .success-row {
-    background: #DD5862;
-  }
 
 </style>

@@ -43,6 +43,14 @@
         label="面试状态"
         width="120"
       ></el-table-column>
+      <el-table-column
+        label="预约状态"
+        width="120"
+      >
+        <template slot-scope="scope">
+          <span>{{ isReserved(scope.row.id) ? '已预约' : '未预约' }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" width="150">
         <template slot-scope="scope">
           <el-dropdown trigger="click">
@@ -94,9 +102,7 @@ export default {
   methods: {
     fetchInterviewRooms() {
       this.loading = true;
-      // 从 cookies 中获取当前学生的姓名
       this.studentName = this.$cookies.get('cname') || '';
-      // 调用 Vuex 的 action 获取与当前学生相关的面试列表
       this.$store
         .dispatch('fetchStudentInterviews', this.studentName)
         .then(() => {
@@ -109,18 +115,20 @@ export default {
         });
     },
     viewInterviewDetail(id) {
-      // 跳转到面试详情页面
       this.$router.push(`/student/interview/${id}`);
     },
     enterInterviewRoom(id, peerId) {
-      // 跳转到学生的面试房间
       this.$router.push(`/student/interviewRoom?id=${id}&peerId=${peerId}`);
     },
     formatDate(row, column, cellValue) {
-      // 格式化日期
       if (!cellValue) return '';
       const date = new Date(cellValue);
       return date.toLocaleString();
+    },
+    isReserved(interviewId) {
+      const reservations = JSON.parse(localStorage.getItem('reservations') || '{}');
+      const reservedStudents = reservations[interviewId] || [];
+      return reservedStudents.includes(this.studentName);
     },
   },
   created() {
@@ -128,6 +136,7 @@ export default {
   },
 };
 </script>
+
 
 <style scoped>
 .student-interview-list {

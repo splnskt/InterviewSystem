@@ -1,12 +1,12 @@
 // 我的试卷页面
 <template>
   <div id="myExam">
-    <div class="title">面试题列表</div>
+    <div class="title">笔试题列表</div>
     <div class="wrapper">
       <ul class="top">
-        <li class="order">面试题列表</li>
-        <li class="search-li"><div class="icon"><input type="text" placeholder="面试题名称" class="search" v-model="key"><i class="el-icon-search"></i></div></li>
-        <li><el-button type="primary" @click="search()">搜索面试题</el-button></li>
+        <li class="order">笔试题列表</li>
+        <li class="search-li"><div class="icon"><input type="text" placeholder="试题名称" class="search" v-model="key"><i class="el-icon-search"></i></div></li>
+        <li><el-button type="primary" @click="search()">搜索试题</el-button></li>
       </ul>
       <ul class="paper" v-loading="loading">
         <li class="item" v-for="(item,index) in pagination.records" :key="index">
@@ -107,19 +107,49 @@ export default {
   }
 }
 .paper {
-  h4 {
-    cursor: pointer;
-  }
+  display: block;
+  padding: 0 20px;
 }
-.paper .item a {
-  color: #000;
+.paper .item {
+  width: 100%;
+  border-radius: 4px;
+  padding: 20px 30px;
+  border: 1px solid #eee;
+  box-shadow: 0 4px 6px -1px rgba(60, 179, 113, 0.1), 0 2px 4px -1px rgba(60, 179, 113, 0.06);
+  transition: all 0.6s ease;
+  margin-bottom: 20px;
+}
+.paper .item:hover {
+  box-shadow: 0 10px 15px -3px rgba(60, 179, 113, 0.2), 0 4px 6px -2px rgba(60, 179, 113, 0.1);
+  transform: translateX(10px);
+}
+.paper .item .info {
+  display: flex;
+  align-items: center;
+}
+.paper .item h4 {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 10px;
+}
+.paper .item .name {
+  color: #666;
+  margin-bottom: 15px;
+}
+.paper .item .info span {
+  margin-right: 20px;
+  color: #666;
+}
+.paper .item .info i {
+  margin-right: 5px;
+  color: #3CB371;
 }
 .wrapper .top .order {
   cursor: pointer;
 }
 .wrapper .top .order:hover {
-  color: #0195ff;
-  border-bottom: 2px solid #0195ff;
+  color: #3CB371;
+  border-bottom: 2px solid #3CB371;
 }
 .wrapper .top .order:visited {
   color: #0195ff;
@@ -127,30 +157,10 @@ export default {
 }
 .item .info i {
   margin-right: 5px;
-  color: #0195ff;
+  color: #3CB371;
 }
 .item .info span {
   margin-right: 14px;
-}
-.paper .item {
-  width: 380px;
-  border-radius: 4px;
-  padding: 20px 30px;
-  border: 1px solid #eee;
-  box-shadow: 0 0 4px 2px rgba(217,222,234,0.3);
-  transition: all 0.6s ease;
-}
-.paper .item:hover {
-  box-shadow: 0 0 4px 2px rgba(140, 193, 248, 0.45);
-  transform: scale(1.03);
-}
-.paper .item .info {
-  font-size: 14px;
-  color: #88949b;
-}
-.paper .item .name {
-  font-size: 14px;
-  color: #88949b;
 }
 .paper * {
   margin: 20px 0;
@@ -191,8 +201,8 @@ export default {
   transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 }
 .top .search:hover {
-  color: #0195ff;
-  border-color: #0195ff;
+  color: #3CB371;
+  border-color: #3CB371;
 }
 .wrapper .top {
   display: flex;
@@ -209,5 +219,18 @@ export default {
 }
 #myExam .wrapper {
   background-color: #fff;
+}
+
+/* 修改搜索按钮样式 */
+.wrapper .top .el-button--primary {
+  background-color: #3CB371;
+  border-color: #3CB371;
+}
+
+.wrapper .top .el-button--primary:hover,
+.wrapper .top .el-button--primary:focus {
+  background-color: #98FFB3;
+  border-color: #98FFB3;
+  color: #3CB371;
 }
 </style>

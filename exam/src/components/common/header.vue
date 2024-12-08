@@ -3,11 +3,10 @@
   <header id="topbar">
     <el-row>
       <el-col :span="4" class="topbar-left">
-        <i class="iconfont icon-kaoshi"></i>
-        <span class="title" @click="index()">Interview-SYSTEM</span>
+        <span class="title" @click="index()">公务员考试系统</span>
       </el-col>
       <el-col :span="20" class="topbar-right">
-        <i class="el-icon-menu" @click="toggle()"></i>
+        <i class="" @click=""></i>
         <div class="user">
           <span>{{user.userName}}</span>
           <img src="@/assets/img/userimg.png" class="user-img" ref="img" @click="showSetting()" />
@@ -28,6 +27,7 @@
 
 <script>
 import {mapState,mapMutations} from 'vuex'
+
 export default {
   data() {
     return {
@@ -35,7 +35,7 @@ export default {
       user: { //用户信息
         userName: null,
         userId: null
-      } 
+      }
     }
   },
   created() {
@@ -82,11 +82,11 @@ export default {
 #topbar {
   position: relative;
   z-index: 10;
-  background-color: #124280;
+  background-color: #3CB371;
   height: 80px;
   line-height: 80px;
   color: #fff;
-  box-shadow: 5px 0px 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1);
 }
 #topbar .topbar-left {
   height: 80px;
@@ -132,7 +132,7 @@ export default {
   top: 80px;
   right: 0px;
   background-color: #fff;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   padding: 12px;
 }
 .user .out ul {

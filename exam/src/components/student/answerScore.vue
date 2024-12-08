@@ -1,27 +1,26 @@
 <template>
   <div class="score">
     <div class="title">
-      <p class="name">计算机网络</p>
-      <p class="description">(总分：100分,限时：100分钟)</p>
-      <p class="description">学生：大咸鱼</p>
+      <p class="name">笔试题</p>
+<!--      <p class="description">考生：大咸鱼</p>-->
     </div>
     <div class="total">
       <div class="look">
         本次考试成绩
       </div>
       <div class="show">
-        <div class="img1" :class="{'img1Transform': imgShow}">
+<!--        <div class="img1" :class="{'img1Transform': imgShow}">
           <img :src="imgSrc.fail1" alt="哭了" v-if="score < 60">
           <img :src="imgSrc.pass1" alt="过了" v-if="score >= 60">
-        </div>
+        </div>-->
         <div class="number" :class="{'border': isTransition}">
           <span>{{score}}</span>
           <span>分数</span>
         </div>
-        <div class="img2" :class="{'img2Transform': imgShow}">
+<!--        <div class="img2" :class="{'img2Transform': imgShow}">
           <img :src="imgSrc.fail2" alt="哭了" v-if="score < 60">
           <img :src="imgSrc.pass2" alt="过了" v-if="score >= 60">
-        </div>
+        </div>-->
       </div>
       <ul class="time">
         <li class="start"><span>开始时间</span> <span>{{startTime}}</span></li>
@@ -82,24 +81,24 @@ export default {
   }
   .img1Transform {
     opacity: 1 !important;
-    transform: translateX(30px) !important;  
+    transform: translateX(30px) !important;
     transition: all 0.6s ease !important;
   }
   .img2Transform {
     opacity: 1 !important;
-    transform: translateX(-30px) !important;  
+    transform: translateX(-30px) !important;
     transition: all 0.6s ease !important;
   }
   .img1 {
     margin-top: 70px;
     opacity: 0;
-    transform: translateX(0px);  
+    transform: translateX(0px);
     transition: all 0.6s ease;
   }
   .img2 {
     margin-top: 30px;
     opacity: 0;
-    transform: translateX(0px);  
+    transform: translateX(0px);
     transition: all 0.6s ease;
   }
 }
@@ -119,12 +118,20 @@ export default {
   }
 }
 .border {
-  border: 6px solid #36aafd !important;
+  position: relative !important;
   transition: all 2s ease;
-  width: 160px !important;
-  height: 160px !important;
+  width: 200px !important;
+  height: 200px !important;
   transform: rotate(360deg) !important;
   opacity: 1 !important;
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%) !important;
+  background-color: #45cc7d !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  box-shadow: 0 0 30px rgba(60, 179, 113, 0.8),
+             0 0 60px rgba(60, 179, 113, 0.6) !important;
 }
 .score {
   max-width: 800px;
@@ -151,34 +158,64 @@ export default {
     padding: 40px;
     .look {
       border-bottom: 1px solid #dbdbdb;
-      padding: 0px 0px 14px 14px;
-      color: #36aafd;
+      padding: 0px 0px 14px 0px;
+      color: #3CB371;
+      font-size: 24px;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 20px;
     }
     .number {
       opacity: 0;
-      border: 6px solid #fff;
       transform: rotate(0deg);
       display: flex;
       justify-content: center;
       align-items: center;
-      flex-direction: column;
+      flex-direction: column-reverse;
       margin: 0 auto;
-      width: 160px;
-      height: 160px;
-      border-radius: 50%;
+      width: 200px;
+      height: 200px;
       margin-top: 80px;
       margin-bottom: 20px;
       transition: all 1s ease;
-      
+
       span:nth-child(1) {
         font-size: 36px;
         font-weight: 600;
+        color: #fff;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        margin-top: 10px;
       }
       span:nth-child(2) {
         font-size: 14px;
+        color: #fff;
+        margin-bottom: 5px;
       }
     }
   }
+}
+
+/* 修改五角星闪烁动画 */
+@keyframes starShine {
+  0% {
+    transform: scale(1) rotate(360deg);
+    box-shadow: 0 0 30px rgba(60, 179, 113, 0.8),
+               0 0 60px rgba(60, 179, 113, 0.6);
+  }
+  50% {
+    transform: scale(1.1) rotate(360deg);
+    box-shadow: 0 0 40px rgba(60, 179, 113, 0.9),
+               0 0 80px rgba(60, 179, 113, 0.7);
+  }
+  100% {
+    transform: scale(1) rotate(360deg);
+    box-shadow: 0 0 30px rgba(60, 179, 113, 0.8),
+               0 0 60px rgba(60, 179, 113, 0.6);
+  }
+}
+
+.border {
+  animation: starShine 2s infinite;
 }
 </style>
 
